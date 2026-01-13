@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ستوديو فراهي | للفخامة عنوان</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;1,700&family=Alexandria:wght@200;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --pure-white: #ffffff;
+            --soft-gray: #fcfcfc;
+            --text-dark: #121212;
+            --text-light: #888888;
+            --accent: #c5a992;
+            --gold-light: #f4f1ee;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Alexandria', sans-serif;
+            background-color: var(--pure-white);
+            color: var(--text-dark);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* ناف بار احترافي */
+        nav {
+            padding: 25px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid #f2f2f2;
+        }
+
+        .brand { font-family: 'Amiri', serif; font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; }
+
+        /* قسم الهيرو المطور */
+        .hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            background: radial-gradient(circle at center, #ffffff 0%, #fafafa 100%);
+        }
+
+        .hero span { color: var(--accent); font-size: 0.9rem; letter-spacing: 3px; font-weight: 600; margin-bottom: 15px; display: block; }
+        .hero h1 { font-family: 'Amiri', serif; font-size: clamp(2rem, 8vw, 4rem); font-weight: 400; margin-bottom: 20px; }
+        .hero p { color: var(--text-light); font-size: 1.1rem; max-width: 600px; font-weight: 200; }
+
+        /* قسم المميزات - لماذا نحن؟ */
+        .features {
+            padding: 80px 8%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            background: var(--soft-gray);
+        }
+
+        .feature-card { text-align: center; padding: 30px; }
+        .feature-card i { font-size: 2rem; color: var(--accent); margin-bottom: 20px; }
+        .feature-card h3 { font-size: 1.1rem; margin-bottom: 15px; font-weight: 600; }
+        .feature-card p { font-size: 0.9rem; color: var(--text-light); }
+
+        /* معرض الأعمال */
+        .section-title { text-align: center; font-family: 'Amiri', serif; font-size: 2.5rem; margin: 80px 0 40px; }
+
+        .work-grid {
+            padding: 0 8% 80px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 50px;
+        }
+
+        .work-item { width: 100%; cursor: pointer; }
+
+        .image-container {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            overflow: hidden;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+
+        .image-container img { width: 100%; height: 100%; object-fit: cover; transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1); }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: 0.5s;
+            backdrop-filter: blur(3px);
+        }
+
+        .overlay span {
+            color: white;
+            border: 1px solid rgba(255,255,255,0.5);
+            padding: 12px 25px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .work-item:hover .overlay { opacity: 1; }
+        .work-item:hover img { transform: scale(1.08); }
+
+        /* قسم الباقات المطور */
+        .pricing { padding: 100px 8%; background: var(--gold-light); }
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .price-card {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            transition: 0.4s;
+            border: 1px solid #eee;
+        }
+
+        .price-card.featured { border: 2px solid var(--accent); transform: scale(1.05); }
+        .price-card h4 { letter-spacing: 2px; color: var(--text-light); font-size: 0.9rem; margin-bottom: 20px; }
+        .price-val { font-family: 'Amiri', serif; font-size: 3rem; color: var(--text-dark); margin-bottom: 30px; }
+        
+        .price-list { list-style: none; text-align: right; margin-bottom: 40px; }
+        .price-list li { font-size: 0.9rem; margin-bottom: 15px; color: #555; }
+        .price-list li i { color: #27ae60; margin-left: 10px; }
+
+        /* خطوات العمل */
+        .steps { padding: 80px 8%; text-align: center; }
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .step-item { position: relative; }
+        .step-number { font-family: 'Amiri', serif; font-size: 3rem; color: var(--gold-light); font-weight: 700; position: absolute; top: -20px; left: 50%; transform: translateX(-50%); z-index: -1; }
+
+        /* نموذج الطلب */
+        .order-section { padding: 100px 8%; max-width: 800px; margin: 0 auto; }
+        .order-form-container { background: #fff; padding: 50px; border-radius: 15px; box-shadow: 0 30px 60px rgba(0,0,0,0.05); }
+        .form-group { margin-bottom: 25px; }
+        label { display: block; font-size: 0.85rem; margin-bottom: 10px; font-weight: 600; color: #444; }
+        input, select, textarea { 
+            width: 100%; padding: 18px; border: 1px solid #efefef; border-radius: 8px; 
+            font-family: inherit; font-size: 0.95rem; background: #f9f9f9; transition: 0.3s;
+        }
+        input:focus { background: #fff; border-color: var(--accent); outline: none; }
+
+        .btn-black { 
+            width: 100%; padding: 22px; background: var(--text-dark); color: white; 
+            border: none; cursor: pointer; font-size: 1.1rem; border-radius: 8px; font-weight: 600;
+        }
+
+        /* موديول المعاينة */
+        #preview-modal {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+            z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(10px);
+        }
+
+        .phone-frame {
+            width: 440px; height: 88vh; background: #000; border: 12px solid #1a1a1a;
+            border-radius: 55px; position: relative; overflow: hidden;
+        }
+
+        .close-preview { position: absolute; top: 30px; left: 30px; color: white; font-size: 2rem; cursor: pointer; }
+
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /* تواصل معنا */
+        .contact-footer { padding: 60px 8%; border-top: 1px solid #eee; text-align: center; }
+        .social-links { margin: 30px 0; }
+        .social-links a { font-size: 1.5rem; margin: 0 15px; color: var(--text-dark); transition: 0.3s; }
+        .social-links a:hover { color: var(--accent); }
+
+        @media (max-width: 768px) {
+            .phone-frame { width: 90%; height: 80vh; }
+            .order-form-container { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="brand">فرحي | FARAHI</div>
+        <div style="font-size: 0.8rem; letter-spacing: 2px;">EST. 2026</div>
+    </nav>
+
+    <section class="hero">
+        <span>WELCOME TO FARAHI</span>
+        <h1>حيث تلتقي الرؤية بالإبداع.</h1>
+        <p>نحن لا نصمم مجرد دعوات، نحن نصمم الانطباع الأول لليلتكم الكبيرة بأسلوب "الفخامة الهادئة".</p>
+    </section>
+
+    <section class="features">
+        <div class="feature-card">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <h3>تصميم حصري</h3>
+            <p>كل دعوة يتم تخصيصها لتعكس هويتكم الشخصية وذوقكم الرفيع.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+            <h3>تجربة مستخدم</h3>
+            <p>سلاسة تامة في التصفح على كافة أنواع الهواتف الذكية.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-shield-heart"></i>
+            <h3>خصوصية تامة</h3>
+            <p>بياناتكم وموقعكم الجغرافي محمي بأعلى معايير الأمان الرقمي.</p>
+        </div>
+    </section>
+
+    <h2 class="section-title">مجموعة التصاميم الخاصة بنا </h2>
+
+    <section class="work-grid">
+        <div class="work-item" onclick="showDemo('https://wwwgate1com.github.io/WID/')">
+            <div class="image-container">
+                <img src="22.jpg" alt="">
+                <div class="overlay"><span>استعراض النموذج الكامل</span></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:20px 0;">
+                <span style="font-weight: 600;">مجموعة النقاء (Pure)</span>
+                <span style="color: var(--accent); font-size: 0.8rem;">LIVE DEMO</span>
+            </div>
+        </div>
+
+        <div class="work-item" onclick="showDemo('https://wwwgate1com.github.io/uid/')">
+            <div class="image-container">
+                <img src="330.jpg" alt="">
+                <div class="overlay"><span>استعراض النموذج الكامل</span></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:20px 0;">
+                <span style="font-weight: 600;">مجموعة الكريستال (Crystal)</span>
+                <span style="color: var(--accent); font-size: 0.8rem;">LIVE DEMO</span>
+            </div>
+        </div>
+
+        <div class="work-item" onclick="showDemo('https://wwwgate1com.github.io/rf/')">
+            <div class="image-container">
+                <img src="ثث.png" alt="">
+                <div class="overlay"><span>استعراض النموذج الكامل</span></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:20px 0;">
+                <span style="font-weight: 600;">مجموعة الفخامة (Officer)</span>
+                <span style="color: var(--accent); font-size: 0.8rem;">LIVE DEMO</span>
+            </div>
+        </div>
+
+        <div class="work-item" onclick="showDemo('https://wwwgate1com.github.io/gra/')">
+            <div class="image-container">
+                <img src="56.jpg" alt="">
+                <div class="overlay"><span>استعراض النموذج الكامل</span></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:20px 0;">
+                <span style="font-weight: 600;">مجموعة التخرج (Graduate)</span>
+                <span style="color: var(--accent); font-size: 0.8rem;">LIVE DEMO</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing">
+        <h2 class="section-title" style="margin-top: 0;">باقاتنا المختارة</h2>
+        <div class="price-grid">
+            <div class="price-card">
+                <h4>STANDARD</h4>
+                <div class="price-val">25 ألف</div>
+                <ul class="price-list">
+                    <li><i class="fa-solid fa-check"></i> تصميم واجهة كلاسيكية</li>
+                    <li><i class="fa-solid fa-check"></i> عداد تنازلي لموعد الحفل</li>
+                    <li><i class="fa-solid fa-check"></i> رابط مباشر للموقع الجغرافي</li>
+                    <li><i class="fa-solid fa-check"></i> استضافة لمدة ٦ أشهر</li>
+                </ul>
+            </div>
+            <div class="price-card featured">
+                <div style="position:absolute; top:15px; left:50%; transform:translateX(-50%); background:var(--accent); color:white; padding:5px 15px; font-size:0.7rem; border-radius:20px;">الأكثر طلباً</div>
+                <h4>PREMIUM</h4>
+                <div class="price-val">40 ألف</div>
+                <ul class="price-list">
+                    <li><i class="fa-solid fa-check"></i> تصميم تفاعلي متقدم</li>
+                    <li><i class="fa-solid fa-check"></i> نظام RSVP لتأكيد الحضور</li>
+                    <li><i class="fa-solid fa-check"></i> خلفية موسيقية من اختياركم</li>
+                    <li><i class="fa-solid fa-check"></i> معرض صور (حتى ٥ صور)</li>
+                    <li><i class="fa-solid fa-check"></i> استضافة لمدة سنة كاملة</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="steps">
+        <h2 class="section-title">كيف نبدأ؟</h2>
+        <div class="steps-grid">
+            <div class="step-item">
+                <div class="step-number">01</div>
+                <h3>اختر التصميم</h3>
+                <p>تصفح النماذج واعرف ما يناسب ذوقكم.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-number">02</div>
+                <h3>املأ البيانات</h3>
+                <p>أرسل تفاصيل الحفل عبر النموذج أدناه.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-number">03</div>
+                <h3>الاستلام</h3>
+                <p>نجهز دعوتكم خلال ٤٨ ساعة فقط.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="order-section">
+        <div class="order-form-container">
+            <h2 style="font-family:'Amiri'; text-align:center; margin-bottom:40px;">استمارة الحجز الرقمي</h2>
+            <form id="orderForm">
+                <div class="form-group"><label>أسماء العروسين</label><input type="text" id="names" placeholder="سارة وأحمد" required></div>
+                <div class="form-group"><label>تاريخ وموعد الحفل</label><input type="text" id="date" placeholder="مثلاً: الجمعة، ٢٠ يناير ٢٠٢٦" required></div>
+                <div class="form-group"><label>القاعة والرابط الجغرافي</label><input type="text" id="hall" placeholder="اسم القاعة + لينك خرائط جوجل" required></div>
+                <div class="form-group">
+                    <label>الباقة المختارة</label>
+                    <select id="package">
+                        <option value="Standard">الباقة الأساسية (25 ألف)</option>
+                        <option value="Premium">الباقة المميزة (40 ألف)</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>ملاحظات خاصة (عبارات معينة / شروط)</label><textarea id="notes" placeholder="اكتب ملاحظاتك هنا..."></textarea></div>
+                <button type="submit" class="btn-black">إرسال الطلب عبر واتساب</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="contact-footer">
+        <h3>تواصلوا معنا مباشرة</h3>
+        <div class="social-links">
+            <a href="https://wa.me/9647886469297"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/farahiinvitation?igsh=MXQzNWhpOTdkZ3FjYw==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+        <p style="font-size: 0.8rem; color: #999;">نحن متاحون للرد على استفساراتكم من ١٠ صباحاً وحتى ١٠ مساءً</p>
+    </section>
+
+    <div id="preview-modal">
+        <span class="close-preview" onclick="closeDemo()">✕</span>
+        <div class="phone-frame">
+            <iframe id="preview-frame" src=""></iframe>
+        </div>
+    </div>
+
+    <footer style="padding: 40px; text-align: center; font-size: 0.75rem; color: #bbb; border-top: 1px solid #f9f9f9;">
+        FARAHI DIGITAL STUDIO — جميع الحقوق محفوظة ٢٠٢٦ ©
+    </footer>
+
+    <script>
+        function showDemo(url) {
+            document.getElementById('preview-modal').style.display = 'flex';
+            document.getElementById('preview-frame').src = url;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDemo() {
+            document.getElementById('preview-modal').style.display = 'none';
+            document.getElementById('preview-frame').src = '';
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('orderForm').onsubmit = function(e) {
+            e.preventDefault();
+            const names = document.getElementById('names').value;
+            const date = document.getElementById('date').value;
+            const hall = document.getElementById('hall').value;
+            const pack = document.getElementById('package').value;
+            const notes = document.getElementById('notes').value || "لا يوجد";
+            
+            const msg = `*طلب حجز من فرحي*%0A------------------%0A💍 الأسماء: ${names}%0A📅 التاريخ: ${date}%0A📍 القاعة: ${hall}%0A📦 الباقة: ${pack}%0A📝 ملاحظات: ${notes}`;
+            window.open(`https://wa.me/9647886469297?text=${msg}`);
+        }
+    </script>
+</body>
+</html>
